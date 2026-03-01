@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.8.4-openjdk-17-slim AS build
+FROM maven:3.8.4-eclipse-temurin-17 AS build
 
 # Set the working directory
 WORKDIR /build
@@ -12,7 +12,7 @@ COPY src ./src
 RUN mvn clean package
 
 # Runtime stage
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk
 
 # Set the working directory
 WORKDIR /app
