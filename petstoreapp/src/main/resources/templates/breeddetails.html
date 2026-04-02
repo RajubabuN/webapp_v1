@@ -1,0 +1,103 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Breed Details Section -->
+<div class="breed-details-section py-5">
+	<div class="container">
+		<!-- Error Messages -->
+		<div class="row justify-content-center mb-4" th:if="${error}">
+			<div class="col-lg-8">
+				<div class="alert alert-danger d-flex align-items-center" role="alert">
+					<i class="bi bi-exclamation-triangle-fill me-3"></i>
+					<span th:text="${error}">Something went wrong</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-4" th:if="${stacktrace}">
+			<div class="col-lg-10">
+				<div class="alert alert-secondary">
+					<h6 class="alert-heading"><i class="bi bi-code-slash me-2"></i>Debug Information</h6>
+					<hr>
+					<pre class="mb-0" style="font-size: 0.85rem; white-space: pre-wrap;" th:text="${stacktrace}"></pre>
+				</div>
+			</div>
+		</div>
+
+		<!-- Breed Hero Section -->
+		<div class="breed-hero-card" th:if="${pet} != null">
+			<div class="row g-0">
+				<div class="col-lg-6">
+					<div class="breed-hero-image">
+						<img class="img-fluid h-100 w-100" th:alt="${pet.name}" th:src="@{${pet.photoURL}}"/>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="breed-hero-content">
+						<div class="breed-hero-header mb-4">
+							<span class="breed-category-badge" th:text="${pet.category.name}"></span>
+							<h1 class="breed-hero-title" th:text="${pet.name}"></h1>
+						</div>
+
+						<div class="product-categories">
+							<h5 class="mb-4">Shop by Category</h5>
+							<div class="category-grid">
+								<a class="category-card toys-category"
+								   th:href="@{'/products?id=' + ${pet.id} + '&category=Toy'}">
+									<div class="category-icon">
+										<i class="bi bi-controller"></i>
+									</div>
+									<div class="category-info">
+										<h6>Toys & Games</h6>
+										<p>Fun playtime essentials</p>
+									</div>
+									<i class="bi bi-arrow-right category-arrow"></i>
+								</a>
+
+								<a class="category-card food-category"
+								   th:href="@{'/products?id=' + ${pet.id} + '&category=Food'}">
+									<div class="category-icon">
+										<i class="bi bi-heart-fill"></i>
+									</div>
+									<div class="category-info">
+										<h6>Food & Treats</h6>
+										<p>Nutritious meals & snacks</p>
+									</div>
+									<i class="bi bi-arrow-right category-arrow"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="breed-actions mt-4">
+							<a class="btn btn-outline-secondary rounded-pill" href="/dogbreeds?category=Dog">
+								<i class="bi bi-arrow-left me-2"></i>Back to Breeds
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Empty State -->
+		<div class="text-center py-5" th:if="${pet} == null">
+			<div class="empty-state">
+				<i class="bi bi-search text-muted mb-3" style="font-size: 4rem;"></i>
+				<h4 class="text-muted mb-2">Breed not found</h4>
+				<p class="text-muted">The breed you're looking for doesn't exist or has been removed.</p>
+				<a class="btn btn-primary rounded-pill px-4" href="/dogbreeds?category=Dog">
+					<i class="bi bi-arrow-left me-2"></i>Browse All Breeds
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+</body>
+
+</html>

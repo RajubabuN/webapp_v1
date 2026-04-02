@@ -1,0 +1,37 @@
+services:
+  petstoreapp:
+    build:
+      context: ./petstoreapp
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      # Set to true if you have a connection string set in .env:
+      - APPLICATIONINSIGHTS_ENABLED=false
+      # Enables External ID login/logout flow locally. Set additional configs in .env:
+      - PETSTORE_SECURITY_ENABLED=false
+
+  petstorepetservice:
+    build:
+      context: ./petstorepetservice
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+
+  petstoreproductservice:
+    build:
+      context: ./petstoreproductservice
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+
+  petstoreorderservice:
+    build:
+      context: ./petstoreorderservice
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
