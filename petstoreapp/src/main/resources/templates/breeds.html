@@ -1,0 +1,84 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Breeds Section -->
+<div class="breeds-section py-5">
+	<div class="container">
+		<!-- Header -->
+		<div class="text-center mb-5">
+			<h1 class="display-4 fw-bold mb-3">Shop by Pet Breeds</h1>
+			<p class="lead text-muted">Choose your favorite breed and discover amazing products</p>
+		</div>
+
+		<!-- Error Messages -->
+		<div class="row justify-content-center mb-4" th:if="${error}">
+			<div class="col-lg-8">
+				<div class="alert alert-danger d-flex align-items-center" role="alert">
+					<i class="bi bi-exclamation-triangle-fill me-3"></i>
+					<span th:text="${error}">Something went wrong</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-4" th:if="${stacktrace}">
+			<div class="col-lg-10">
+				<div class="alert alert-secondary">
+					<h6 class="alert-heading"><i class="bi bi-code-slash me-2"></i>Debug Information</h6>
+					<hr>
+					<pre class="mb-0" style="font-size: 0.85rem; white-space: pre-wrap;" th:text="${stacktrace}"></pre>
+				</div>
+			</div>
+		</div>
+
+		<!-- Breeds Grid -->
+		<div class="row g-4 justify-content-center" th:if="${pets} != null">
+			<div class="col-sm-6 col-md-4 col-lg-3" th:each="pet, iStat : ${pets}">
+				<div class="breed-card h-100">
+					<div class="breed-image">
+						<img class="img-fluid" th:alt="${pet.name}" th:src="@{${pet.photoURL}}"/>
+						<div class="breed-overlay">
+							<div class="breed-overlay-content">
+								<h5 class="text-white mb-2" th:text="${pet.name}"></h5>
+								<p class="text-white-50 small mb-3" th:text="${pet.category.name}"></p>
+								<a class="btn btn-light btn-sm rounded-pill px-3"
+								   th:href="@{'/breeddetails?id=' + ${pet.id} + '&category=' + ${pet.category.name}}">
+									<i class="bi bi-heart me-1"></i>Shop Now
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="breed-info p-3">
+						<h6 class="breed-name mb-2" th:text="${pet.name}"></h6>
+						<p class="breed-category text-muted small mb-3" th:text="${pet.category.name}"></p>
+						<a class="btn btn-outline-primary btn-sm w-100 rounded-pill"
+						   th:href="@{'/breeddetails?id=' + ${pet.id} + '&category=' + ${pet.category.name}}">
+							<i class="bi bi-shopping-bag me-1"></i>View Products
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Empty State -->
+		<div class="text-center py-5" th:if="${pets} == null or ${pets.isEmpty()}">
+			<div class="empty-state">
+				<i class="bi bi-heart text-muted mb-3" style="font-size: 4rem;"></i>
+				<h4 class="text-muted mb-2">No breeds available</h4>
+				<p class="text-muted">Check back later for amazing pet breeds!</p>
+				<a class="btn btn-primary rounded-pill px-4" href="/">
+					<i class="bi bi-house me-2"></i>Back to Home
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+</body>
+
+</html>
