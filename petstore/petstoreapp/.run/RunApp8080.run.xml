@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunApp8080" type="Application" factoryName="Application">
+    <envs>
+      <env name="PETSTOREAPP_SERVER_PORT" value="8080" />
+      <env name="PETSTOREPETSERVICE_URL" value="http://localhost:8081" />
+      <env name="PETSTOREPRODUCTSERVICE_URL" value="http://localhost:8082" />
+      <env name="PETSTOREORDERSERVICE_URL" value="http://localhost:8083" />
+      <env name="APPLICATIONINSIGHTS_ENABLED" value="false"/>
+      <env name="PETSTORE_SECURITY_ENABLED" value="false"/>
+      <env name="AZURE_CLIENT_ID" value="your-external-id-client-id"/>
+      <env name="AZURE_CLIENT_SECRET" value="your-external-id-secret"/>
+      <env name="AZURE_TENANT_DOMAIN" value="your-tenant-name"/>
+    </envs>
+    <module name="petstoreapp" />
+    <option name="MAIN_CLASS_NAME" value="com.chtrembl.petstoreapp.PetStoreApplication"/>
+    <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

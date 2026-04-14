@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "java",
+    "BLOB_CONNECTION_STRING": "",
+    "BLOB_CONTAINER_NAME": "orders"
+  }
+}
