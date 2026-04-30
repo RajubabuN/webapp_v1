@@ -1,0 +1,87 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="footer">
+	<div class="container">
+		<footer class="pt-4 my-md-5 pt-md-5">
+			<div class="row align-items-start justify-content-center">
+				<div class="col-auto text-center px-5">
+					<h5>Dog Products</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="/dogbreeds?category=Dog"
+							   style="color: #3C7BB7 !important;">Shop by breeds</a></li>
+					</ul>
+				</div>
+				<div class="col-auto text-center px-5">
+					<h5>Cat Products</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="/dogbreeds?category=Cat"
+							   style="color: #3C7BB7 !important;">Shop by breeds</a></li>
+					</ul>
+				</div>
+				<div class="col-auto text-center px-5">
+					<h5>Fish Products</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="/dogbreeds?category=Fish"
+							   style="color: #3C7BB7 !important;">Shop by breeds</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row mt-4 align-items-start justify-content-center">
+				<div class="col-auto px-4">
+					<small class="d-block text-muted"
+						   style="text-align: left !important;">
+						Container: <span
+							th:text="${containerEnvironment.containerHostName}"></span><br/>
+						Version: <span th:text="${containerEnvironment.appVersion}"></span><br/>
+						Date: <span th:text="${containerEnvironment.appDate}"></span><br/>
+						Session: <span th:text="${sessionId}"></span>
+					</small>
+				</div>
+				<div class="col-auto px-4">
+					<small class="d-block text-muted"
+						   style="text-align: left !important;">
+						Microservices Environment Variables:<br/>
+						PETSTOREPETSERVICE_URL: <span
+							th:text="${containerEnvironment.petStorePetServiceURL}"></span><br/>
+						PETSTOREPRODUCTSERVICE_URL: <span
+							th:text="${containerEnvironment.petStoreProductServiceURL}"></span><br/>
+						PETSTOREORDERSERVICE_URL: <span
+							th:text="${containerEnvironment.petStoreOrderServiceURL}"></span>
+					</small>
+				</div>
+			</div>
+
+			<!-- Dynamic health monitoring section -->
+			<div class="row mt-4 justify-content-center">
+				<div class="col-auto">
+					<div class="health-monitoring">
+						<small class="text-muted d-flex align-items-center justify-content-center gap-3">
+							<!-- Dynamic status indicator -->
+							<span class="health-status-indicator">
+								<span class="health-status-badge status-checking" id="health-status-badge">
+									<i class="fas fa-sync fa-spin"></i>
+									<span>Checking...</span>
+								</span>
+							</span>
+							<a class="health-link" href="/actuator/health" target="_blank">
+								<i class="fas fa-shield-alt"></i> Health Check
+							</a>
+							<span class="text-muted">|</span>
+							<a class="health-link" href="/actuator/info" target="_blank">
+								<i class="fas fa-info-circle"></i> App Info
+							</a>
+							<span class="text-muted" th:if="${currentUsersOnSite}">
+								| <i class="fas fa-users text-primary"></i> 
+								<span th:text="${currentUsersOnSite}">0</span> online
+							</span>
+						</small>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script src="/content/js/health-monitor.js"></script>
+</div>
+</body>
+</html>

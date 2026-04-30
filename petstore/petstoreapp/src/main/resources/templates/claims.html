@@ -1,0 +1,49 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4 mb-4">User Claims</h1>
+	<p class="text-muted mb-5">Your Azure B2C authentication claims and profile information</p>
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="card shadow-lg border-0" th:if="${claims} != null">
+					<div class="card-header bg-primary text-white">
+						<h5 class="mb-0">
+							<i class="bi bi-person-badge me-2"></i>Authentication Claims
+						</h5>
+					</div>
+					<div class="card-body p-0">
+						<div class="list-group list-group-flush">
+							<div class="list-group-item" th:each="claim, iStat : ${claims}">
+								<div class="row align-items-center">
+									<div class="col-4">
+										<span class="badge bg-light text-dark fw-bold claim-key"
+											  th:text="${claim.key}"></span>
+									</div>
+									<div class="col-8">
+										<span class="claim-value text-break" th:text="${claim.value}"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="alert alert-info mt-4" th:if="${claims} == null">
+					<i class="bi bi-info-circle me-2"></i>
+					No claims available. Please sign in to view your authentication information.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RunPetService8081" type="Application" factoryName="Application">
+    <envs>
+      <env name="PETSTOREPETSERVICE_SERVER_PORT" value="8081" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.chtrembl.petstore.pet.PetServiceApplication"/>
+    <module name="petstorepetservice" />
+    <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

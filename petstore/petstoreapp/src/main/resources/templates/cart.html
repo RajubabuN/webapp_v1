@@ -1,0 +1,168 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Cart Section -->
+<div class="cart-section py-5">
+	<div class="container">
+		<!-- Header -->
+		<div class="text-center mb-5">
+			<h1 class="display-4 fw-bold mb-3">Shopping Cart</h1>
+			<p class="lead text-muted">Review your items and proceed to checkout</p>
+		</div>
+
+		<!-- Error Messages -->
+		<div class="row justify-content-center mb-4" th:if="${error}">
+			<div class="col-lg-8">
+				<div class="alert alert-danger d-flex align-items-center" role="alert">
+					<i class="bi bi-exclamation-triangle-fill me-3"></i>
+					<span th:text="${error}">Something went wrong</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Debug Information -->
+		<div class="row justify-content-center mb-4" th:if="${stacktrace}">
+			<div class="col-lg-10">
+				<div class="alert alert-secondary">
+					<h6 class="alert-heading"><i class="bi bi-code-slash me-2"></i>Debug Information</h6>
+					<hr>
+					<pre class="mb-0" style="font-size: 0.85rem; white-space: pre-wrap;" th:text="${stacktrace}"></pre>
+				</div>
+			</div>
+		</div>
+
+		<!-- Cart Content Container -->
+		<div id="cart-content">
+			<!-- Empty Cart - ONLY show when cart is empty AND order is NOT complete AND no error -->
+			<div class="text-center py-5"
+				 th:if="(${order} == null or ${order.products} == null or (${order.products} != null and ${order.products.size} == 0)) and (${order} == null or ${order.complete} != true)"
+				 th:unless="${error}">
+				<div class="empty-state">
+					<i class="bi bi-cart text-muted mb-3" style="font-size: 4rem;"></i>
+					<h4 class="text-muted mb-2">Your cart is empty</h4>
+					<p class="text-muted">Add some amazing products to get started!</p>
+					<a class="btn btn-primary rounded-pill px-4" href="/dogbreeds?category=Dog">
+						<i class="bi bi-heart me-2"></i>Start Shopping
+					</a>
+				</div>
+			</div>
+
+			<!-- Cart Items - show when there are products and order is not complete -->
+			<div class="row justify-content-center"
+				 th:if="${order} != null and ${order.complete} != true and ${order.products} != null and ${order.products.size} > 0">
+				<div class="col-lg-10">
+					<div class="cart-container">
+						<!-- Cart Items -->
+						<div class="cart-item" th:each="product, iStat : ${order.products}">
+							<div class="row align-items-center">
+								<div class="col-md-2 text-center">
+									<div class="product-image-small">
+										<img class="img-fluid" th:alt="${product.name}"
+											 th:src="@{${product.photoURL}}"/>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<h6 class="product-title mb-1" th:text="${product.name}"></h6>
+									<p class="product-id text-muted small mb-0">ID: <span
+											th:text="${product.id}"></span></p>
+								</div>
+								<div class="col-md-3 text-center">
+									<div class="quantity-controls">
+										<button class="btn btn-outline-secondary btn-sm quantity-btn"
+												th:onclick="'updateCartAjax(\'' + ${product.id} + '\', \'minus\');'"
+												type="button">
+											<i class="bi bi-dash"></i>
+										</button>
+										<span class="quantity-value" th:text="${product.quantity}"></span>
+										<button class="btn btn-outline-secondary btn-sm quantity-btn"
+												th:onclick="'updateCartAjax(\'' + ${product.id} + '\', \'plus\');'"
+												type="button">
+											<i class="bi bi-plus"></i>
+										</button>
+									</div>
+								</div>
+								<div class="col-md-2 text-end">
+									<button class="btn btn-outline-danger btn-sm remove-btn"
+											th:onclick="'removeCartAjax(\'' + ${product.id} + '\');'"
+											title="Remove item">
+										<i class="bi bi-trash"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- Cart Summary -->
+						<div class="cart-summary">
+							<div class="row">
+								<div class="col-md-8">
+									<h5 class="mb-0">Order Summary</h5>
+									<p class="text-muted small">Review your items before checkout</p>
+								</div>
+								<div class="col-md-4 text-end">
+									<div class="total-items">
+										<span class="badge bg-primary rounded-pill"
+											  th:text="${order.products.size} + ' items'"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Login Required Message for Cart Items -->
+						<div class="login-warning" th:if="${userLoggedIn} != true">
+							<div class="alert alert-warning d-flex align-items-center mb-0" role="alert">
+								<i class="bi bi-lock me-3"></i>
+								<div>
+									<strong>Login Required</strong><br>
+									You need to log in before completing your order
+								</div>
+							</div>
+						</div>
+
+						<!-- Checkout Button -->
+						<div class="checkout-section text-center" th:if="${userLoggedIn} == true">
+							<button class="btn btn-success btn-lg rounded-pill px-5 checkout-btn"
+									onclick="completeOrderAjax();" type="button">
+								<i class="bi bi-check-circle me-2"></i>Complete Order
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Order Complete - show ONLY when order is complete -->
+			<div class="text-center py-5" th:if="${order} != null and ${order.complete} == true">
+				<div class="success-state">
+					<i class="bi bi-check-circle-fill text-success mb-3" style="font-size: 4rem;"></i>
+					<h3 class="text-success mb-3">Order Complete!</h3>
+					<p class="lead text-muted">Congratulations, your order is now complete and being processed!</p>
+					<a class="btn btn-primary rounded-pill px-4" href="/dogbreeds?category=Dog">
+						<i class="bi bi-arrow-repeat me-2"></i>Shop Again
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Hidden Forms (fallback for non-JS users) -->
+<form action="updatecart" id="updatecart" method="post" style="display: none;">
+	<input th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+	<input id="productId" name="productId" type="hidden" value="">
+	<input id="operator" name="operator" type="hidden" value="">
+</form>
+<form action="completecart" id="completecart" method="post" style="display: none;">
+	<input th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+</form>
+
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+
+<script src="/content/js/cart.js"></script>
+
+</body>
+
+</html>

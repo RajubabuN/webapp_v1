@@ -1,0 +1,128 @@
+# =========================
+# Java / JVM
+# =========================
+
+# Compiled class file
+*.class
+
+# Package files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# Log files
+*.log
+logs/
+*.out
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+
+# =========================
+# Build tools
+# =========================
+
+# Maven
+target/
+dependency-reduced-pom.xml
+
+
+# =========================
+# IDEs / Editors
+# =========================
+
+# IntelliJ IDEA
+.idea
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.factorypath
+
+# VS Code
+.vscode/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+# =========================
+# Env / local config
+# =========================
+
+.env
+.env.*
+!.env.example
+*.local
+
+# Java/Spring config overrides
+application-local.yml
+application-local.yaml
+application-dev.yml
+application-dev.yaml
+
+
+# =========================
+# Test / coverage
+# =========================
+
+coverage/
+jacoco.exec
+/site/jacoco/
+surefire-reports/
+failsafe-reports/
+
+
+# =========================
+# Temporary files
+# =========================
+
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+
+# =========================
+# Existing project-specific rules
+# =========================
+
+sandbox/**/*
+!webapp.zip
+
+# AI Assistants
+.claude/
+CLAUDE.md
+.codemie/

@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: petstoreproductservice
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          # Key Vault URI is injected via AZURE_KEYVAULT_URI env var (set in App Service / Container App)
+          # e.g. https://petstore-keyvault.vault.azure.net/
+          endpoint: ${AZURE_KEYVAULT_URI:}
+          # When running on Azure with managed identity, no credentials are needed.
+          # For local development set AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID.
+  datasource:
+    url: ${PETSTOREPRODUCTSERVICE_DATASOURCE_URL:jdbc:postgresql://localhost:5432/petstoreproductservice_db}
+    username: ${PETSTOREPRODUCTSERVICE_DATASOURCE_USERNAME:postgres}
+    password: ${PETSTOREPRODUCTSERVICE_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+
+server:
+  port: ${PETSTOREPRODUCTSERVICE_SERVER_PORT:8080}
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  show-actuator: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    ssl:
+      enabled: false
+    diskspace:
+      enabled: false

@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- Hero Section -->
+<div class="hero-section py-5">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-6">
+				<div class="hero-content">
+					<h1 class="display-4 fw-bold mb-4">Welcome to the <span class="text-primary">Azure&nbsp;Pet&nbsp;Store</span>
+					</h1>
+					<h2 class="h4 text-muted mb-4">Start exploring and learning Azure today!</h2>
+					<p class="lead mb-4">Discover amazing products for your beloved pets while learning cloud
+						technologies.</p>
+
+					<!-- Call-to-action buttons -->
+					<div class="d-flex flex-wrap gap-3 mb-5">
+						<a class="btn btn-outline-primary btn-lg rounded-pill px-4 hero-btn"
+						   href="/dogbreeds?category=Dog">
+							<i class="bi bi-heart me-2"></i>Shop for Dogs
+						</a>
+						<a class="btn btn-outline-primary btn-lg rounded-pill px-4 hero-btn"
+						   href="/dogbreeds?category=Cat">
+							<i class="bi bi-heart me-2"></i>Shop for Cats
+						</a>
+						<a class="btn btn-outline-primary btn-lg rounded-pill px-4 hero-btn"
+						   href="/dogbreeds?category=Fish">
+							<i class="bi bi-heart me-2"></i>Shop for Fish
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="hero-image text-center">
+					<img alt="Azure Pet Store Banner"
+						 class="img-fluid rounded-3 banner-modern"
+						 src="content/banner.png"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+</body>
+
+</html>

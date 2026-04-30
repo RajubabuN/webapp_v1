@@ -1,0 +1,94 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en" th:replace="~{fragments/head :: head}"></head>
+
+<body>
+<div lang="en" th:replace="~{fragments/header :: header}"></div>
+
+<!-- Products Section -->
+<div class="products-section py-5">
+	<div class="container">
+		<!-- Header -->
+		<div class="text-center mb-5">
+			<h1 class="display-4 fw-bold mb-3">Select a Product</h1>
+			<p class="lead text-muted">Discover premium products for your beloved pet</p>
+		</div>
+
+		<!-- Error Messages -->
+		<div class="row justify-content-center mb-4" th:if="${error}">
+			<div class="col-lg-8">
+				<div class="alert alert-danger d-flex align-items-center" role="alert">
+					<i class="bi bi-exclamation-triangle-fill me-3"></i>
+					<span th:text="${error}">Something went wrong</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-4" th:if="${stacktrace}">
+			<div class="col-lg-10">
+				<div class="alert alert-secondary">
+					<h6 class="alert-heading"><i class="bi bi-code-slash me-2"></i>Debug Information</h6>
+					<hr>
+					<pre class="mb-0" style="font-size: 0.85rem; white-space: pre-wrap;" th:text="${stacktrace}"></pre>
+				</div>
+			</div>
+		</div>
+
+		<!-- Products Grid -->
+		<div class="row g-4 justify-content-center" th:if="${products} != null">
+			<div class="col-sm-6 col-md-4 col-lg-3" th:each="product, iStat : ${products}">
+				<div class="product-card h-100">
+					<div class="product-image">
+						<img class="img-fluid" th:alt="${product.name}" th:src="@{${product.photoURL}}"/>
+						<div class="product-overlay">
+							<button class="btn btn-light btn-sm rounded-pill add-to-cart-overlay"
+									th:onclick="'updatecart(\'' + ${product.id} + '\');'">
+								<i class="bi bi-cart-plus me-1"></i>Quick Add
+							</button>
+						</div>
+					</div>
+					<div class="product-info p-3">
+						<h6 class="product-name mb-3" th:text="${product.name}"></h6>
+						<div class="product-actions">
+							<button class="btn btn-primary w-100 rounded-pill add-to-cart-btn"
+									th:onclick="'updatecart(\'' + ${product.id} + '\');'">
+								<i class="bi bi-cart-plus me-2"></i>Add to Cart
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Empty State -->
+		<div class="text-center py-5" th:if="${products} == null or ${products.isEmpty()}">
+			<div class="empty-state">
+				<i class="bi bi-bag text-muted mb-3" style="font-size: 4rem;"></i>
+				<h4 class="text-muted mb-2">No products available</h4>
+				<p class="text-muted">Check back later for amazing products!</p>
+				<a class="btn btn-primary rounded-pill px-4" href="/dogbreeds?category=Dog">
+					<i class="bi bi-arrow-left me-2"></i>Back to Breeds
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Hidden Form -->
+<form action="updatecart" id="addProduct" method="post">
+	<input th:if="${_csrf}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+	<input id="productId" name="productId" type="hidden" value="">
+</form>
+
+<div lang="en" th:replace="~{fragments/footer :: footer}"></div>
+<div lang="en" th:replace="~{fragments/disclaimer :: disclaimer}"></div>
+
+<script>
+	function updatecart(productId) {
+		document.getElementById('productId').value = productId;
+		document.getElementById('addProduct').submit();
+	}
+</script>
+</body>
+
+</html>
