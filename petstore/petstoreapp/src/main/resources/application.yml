@@ -6,6 +6,11 @@ petstore:
       url: ${PETSTOREPRODUCTSERVICE_URL:http://localhost:8082}
     order:
       url: ${PETSTOREORDERSERVICE_URL:http://localhost:8083}
+  servicebus:
+    # Azure Service Bus connection string (set as env var in Container App / App Service)
+    connection-string: ${SERVICEBUS_CONNECTION_STRING:}
+    # Name of the queue to send order update messages to
+    queue-name: ${SERVICEBUS_ORDER_QUEUE_NAME:order-queue}
   security:
     # Enable in Module 10
     enabled: ${PETSTORE_SECURITY_ENABLED:false}

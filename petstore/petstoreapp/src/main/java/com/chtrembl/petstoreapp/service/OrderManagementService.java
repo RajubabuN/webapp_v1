@@ -30,6 +30,7 @@ public class OrderManagementService {
 
     private final User sessionUser;
     private final OrderServiceClient orderServiceClient;
+    private final ServiceBusOrderPublisher serviceBusOrderPublisher;
 
     public void updateOrder(long productId, int quantity, boolean completeOrder) {
         MDC.put(OPERATION, "updateOrder");
@@ -48,6 +49,12 @@ public class OrderManagementService {
 
             Order resultOrder = orderServiceClient.createOrUpdateOrder(orderJSON);
             log.info("Successfully updated order: {}", resultOrder);
+
+            // Publish to Service Bus so OrderItemsReserver can persist the snapshot to Blob Storage.
+            // Only for cart updates (not order completion) — completion is a terminal state.
+            if (!completeOrder) {
+                serviceBusOrderPublisher.publishOrderUpdate(resultOrder, this.sessionUser.getSessionId());
+            }
 
         } catch (FeignException fe) {
             log.error("Unable to update order via Feign client: HTTP {} - {}", fe.status(), fe.getMessage(), fe);
